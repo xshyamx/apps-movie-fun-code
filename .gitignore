@@ -3,3 +3,5 @@ target
 classes
 build
 .idea
+ci/variables*.yml
+*.versionsBackup

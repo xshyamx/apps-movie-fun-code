@@ -1,0 +1,58 @@
+---
+resources:
+- name: apps-movie-fun-code
+  type: git
+  source:
+    uri: {{github-repository}}
+    branch: {{github-branch}}
+    private_key: {{github-private-key}}
+
+- name: movie-fun-artifacts
+  type: s3
+  source:
+    bucket: {{aws-bucket}}
+    regexp: releases/moviefun-(.*).war
+    access_key_id: {{aws-access-key-id}}
+    secret_access_key: {{aws-secret-access-key}}
+
+- name: version
+  type: semver
+  source:
+    bucket: {{aws-bucket}}
+    key: apps-movie-fun-code/version
+    access_key_id: {{aws-access-key-id}}
+    secret_access_key: {{aws-secret-access-key}}
+
+- name: sandbox-deployment
+  type: cf
+  source:
+    api: {{cf-api-url}}
+    username: {{cf-username}}
+    password: {{cf-password}}
+    organization: {{cf-org}}
+    space: sandbox
+
+jobs:
+- name: build
+  plan:
+  - get: apps-movie-fun-code
+    trigger: true
+  - get: version
+    params: {bump: patch}
+  - task: bump version and test
+    file: apps-movie-fun-code/ci/build.yml
+  - put: movie-fun-artifacts
+    params:
+      file: build-output/moviefun-*.war
+
+- name: deploy-sandbox
+  plan:
+  - get: apps-movie-fun-code
+    passed: [build]
+  - get: movie-fun-artifacts
+    trigger: true
+    passed: [build]
+  - put: sandbox-deployment
+    params:
+      manifest: apps-movie-fun-code/manifest.yml
+      path: movie-fun-artifacts/moviefun-*.war

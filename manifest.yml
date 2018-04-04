@@ -1,0 +1,7 @@
+---
+applications:
+- name: moviefun
+  path: target/moviefun-$(cat ../version/number).war
+  random-route: true
+  services:
+    - movies-mysql
