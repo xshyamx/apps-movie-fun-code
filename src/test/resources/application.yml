@@ -3,7 +3,7 @@ spring:
     generate-ddl: true
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
   datasource:
-    url: jdbc:mysql://192.168.99.100:3306/movies?useSSL=false
+    url: jdbc:mysql://${MYSQL_HOST:192.168.99.100}:3306/movies?useSSL=false
     username: root
 
   mvc.view:
@@ -18,7 +18,7 @@ vcap:
           "credentials": {
             "access_key_id": "${MINIO_ACCESS_KEY:PPYXXWEDWP2FSXTSHJ87}",
             "bucket": "movie-fun-course",
-            "secret_access_key": "${MINIO_SECRET_ACCESS_KEY:r4MnpFl7FVfHVS2TZk05R0PThCnLVVVdv17RfwaL}"
+            "secret_access_key": "${MINIO_SECRET_KEY:r4MnpFl7FVfHVS2TZk05R0PThCnLVVVdv17RfwaL}"
           },
           "label": "aws-s3",
           "name": "moviefun-s3"

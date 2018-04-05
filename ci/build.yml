@@ -18,7 +18,26 @@ run:
   args:
   - -exc
   - |
+    export DEBIAN_FRONTEND="noninteractive"
+    apt-get update
+    apt-get -y install mysql-server
+    service mysql start
+    mysql -uroot <<EOF
+      DROP DATABASE IF EXISTS movies;
+      CREATE DATABASE movies;
+    EOF
+    export MYSQL_HOST=localhost
+    wget https://dl.minio.io/server/minio/release/linux-amd64/minio
+    chmod +x minio
+    mv minio /usr/local/bin/
+    export MINIO_ACCESS_KEY=minio
+    export MINIO_ACCESS_KEY=miniostorage
+    minio server /data
+
     cd apps-movie-fun-code
     mvn versions:set -DnewVersion=$(cat ../version/number)
-    mvn clean package -DskipTests -Dmaven.test.skip=true
+    #mvn clean package -DskipTests -Dmaven.test.skip=true
+    mvn clean package
     cp target/moviefun-*.war ../build-output
+
+    service mysql stop

@@ -48,7 +48,7 @@ jobs:
     params:
       file: version/number
 
-- name: deploy-review
+- name: deploy-to-sandbox
   plan:
   - get: apps-movie-fun-code
     passed: [build]
