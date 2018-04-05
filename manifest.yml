@@ -1,0 +1,12 @@
+---
+applications:
+- name: moviefun
+  buildpack: java_buildpack_offline
+  path: target/moviefun-$(cat ../version/number).jar
+  random-route: true
+  instances: 2
+  services:
+    - movies-mysql
+    - moviefun-s3
+  env:
+    S3_ENDPOINTURL: https://s3.amazonaws.com
