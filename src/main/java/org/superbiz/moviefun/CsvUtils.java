@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class CsvUtils {
 
     public static InputStream readFile(String path) {
-        return ClassLoader.getSystemResourceAsStream(path);
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
     }
 
     public static <T> List<T> readFromCsv(ObjectReader objectReader, String path) {
