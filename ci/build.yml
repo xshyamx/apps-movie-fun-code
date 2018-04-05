@@ -22,3 +22,4 @@ run:
     mvn versions:set -DnewVersion=$(cat ../version/number)
     mvn clean package -DskipTests -Dmaven.test.skip=true
     cp target/moviefun-*.war ../build-output
+  

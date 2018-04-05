@@ -11,7 +11,7 @@ resources:
   type: s3
   source:
     bucket: {{aws-bucket}}
-    regexp: releases/moviefun-(.*).jar
+    regexp: releases/moviefun-(.*).war
     access_key_id: {{aws-access-key-id}}
     secret_access_key: {{aws-secret-access-key}}
 
@@ -43,7 +43,7 @@ jobs:
     file: apps-movie-fun-code/ci/build.yml
   - put: apps-movie-fun-code-artifacts
     params:
-      file: build-output/moviefun-*.jar
+      file: build-output/moviefun-*.war
   - put: version
     params:
       file: version/number
@@ -58,5 +58,5 @@ jobs:
   - put: sandbox-deployment
     params:
       manifest: apps-movie-fun-code/manifest.yml
-      path: apps-movie-fun-code-artifacts/moviefun-*.jar
+      path: apps-movie-fun-code-artifacts/moviefun-*.war
 
