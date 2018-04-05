@@ -7,3 +7,6 @@ applications:
   instances: 2
   services:
     - movies-mysql
+    - moviefun-s3
+  env:
+    S3_ENDPOINTURL: https://s3.amazonaws.com
