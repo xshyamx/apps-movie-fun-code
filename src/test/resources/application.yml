@@ -4,7 +4,8 @@ spring:
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:192.168.99.100}:3306/movies?useSSL=false
-    username: root
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD}
 
   mvc.view:
     prefix: /WEB-INF/

@@ -25,10 +25,13 @@ run:
     mysql -uroot <<EOF
       DROP DATABASE IF EXISTS movies;
       CREATE DATABASE movies;
-      GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '';
+      CREATE USER IF NOT EXISTS 'movie-user'@'localhost' identified by 'movie-password';
+      GRANT ALL PRIVILEGES ON movies.* TO 'movie-user'@'localhost';
       FLUSH PRIVILEGES;
     EOF
     export MYSQL_HOST=localhost
+    export MYSQL_USER=movie-user
+    export MYSQL_PASSWORD=movie-password
     wget https://dl.minio.io/server/minio/release/linux-amd64/minio
     chmod +x minio
     mv minio /usr/local/bin/
