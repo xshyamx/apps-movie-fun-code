@@ -27,7 +27,6 @@
     </properties>
 
     <build>
-        <finalName>moviefun</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
