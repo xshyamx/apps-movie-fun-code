@@ -25,6 +25,7 @@ run:
     mysql -uroot <<EOF
       DROP DATABASE IF EXISTS movies;
       CREATE DATABASE movies;
+      GRANT ALL PRIVILEGES ON movies.* TO 'root'@'localhost';
     EOF
     export MYSQL_HOST=localhost
     wget https://dl.minio.io/server/minio/release/linux-amd64/minio
@@ -33,6 +34,7 @@ run:
     export MINIO_ACCESS_KEY=minio
     export MINIO_ACCESS_KEY=miniostorage
     minio server /data &
+    MINIO_PID=$!
 
     cd apps-movie-fun-code
     mvn versions:set -DnewVersion=$(cat ../version/number)
@@ -41,3 +43,4 @@ run:
     cp target/moviefun-*.war ../build-output
 
     service mysql stop
+    kill -9 $MINIO_PID
