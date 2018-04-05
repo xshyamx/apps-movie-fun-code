@@ -1,6 +1,7 @@
 ---
 applications:
 - name: moviefun
+  buildpack: java_buildpack_offline
   path: target/moviefun-$(cat ../version/number).jar
   random-route: true
   services:
