@@ -6,3 +6,24 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create
+---
+spring:
+  profiles: docker
+vcap:
+  services: |
+    {
+      "p-mysql": [
+        {
+          "credentials": {
+            "jdbcUrl": "jdbc:mysql://192.168.99.100:3306/albums?user=root"
+          },
+          "name": "albums-mysql"
+        },
+        {
+          "credentials": {
+            "jdbcUrl": "jdbc:mysql://192.168.99.100:3306/movies?user=root"
+          },
+          "name": "movies-mysql"
+        }
+      ]
+    }

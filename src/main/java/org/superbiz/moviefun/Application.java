@@ -32,7 +32,7 @@ public class Application {
 
     @Bean
     DatabaseServiceCredentials databaseServiceCredentials(
-            @Value("${VCAP_SERVICES}") String vcapServices
+            @Value("${vcap.services}") String vcapServices
     ) {
         return new DatabaseServiceCredentials(vcapServices);
     }
