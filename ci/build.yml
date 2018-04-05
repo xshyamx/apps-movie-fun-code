@@ -32,7 +32,7 @@ run:
     mv minio /usr/local/bin/
     export MINIO_ACCESS_KEY=minio
     export MINIO_ACCESS_KEY=miniostorage
-    minio server /data
+    minio server /data &
 
     cd apps-movie-fun-code
     mvn versions:set -DnewVersion=$(cat ../version/number)
