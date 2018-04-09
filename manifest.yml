@@ -10,3 +10,4 @@ applications:
     - moviefun-s3
   env:
     S3_ENDPOINTURL: https://s3.amazonaws.com
+    SPRING_PROFILES_ACTIVE: s3

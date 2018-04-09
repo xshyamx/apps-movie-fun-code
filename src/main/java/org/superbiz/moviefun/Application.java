@@ -8,9 +8,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
 import org.superbiz.moviefun.blobstore.BlobStore;
+import org.superbiz.moviefun.blobstore.FileStore;
 import org.superbiz.moviefun.blobstore.S3Store;
 import org.superbiz.moviefun.blobstore.ServiceCredentials;
+
+import java.nio.file.Paths;
 
 @SpringBootApplication
 public class Application {
@@ -25,11 +30,19 @@ public class Application {
     }
 
     @Bean
+    @Profile("s3")
     ServiceCredentials serviceCredentials(@Value("${vcap.services}") String vcapServices) {
         return new ServiceCredentials(vcapServices);
     }
 
     @Bean
+    @Profile("file")
+    public BlobStore fileStore() {
+        return new FileStore(Paths.get("covers"));
+    }
+
+    @Bean
+    @Profile("s3")
     public BlobStore blobStore(
             ServiceCredentials serviceCredentials,
             @Value("${s3.endpointUrl:#{null}}") String s3EndpointUrl
